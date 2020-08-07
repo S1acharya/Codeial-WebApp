@@ -3,7 +3,8 @@ const app = express();
 const port = 8000;
 
 
-// we use express router
+// we use express router when we have to connect home page to other pages
+// by next line , we are connecting index.js(main page) to (index.js of routes folder)
 app.use('/' , require('./routes'));
 
 
