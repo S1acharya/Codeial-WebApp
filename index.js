@@ -14,6 +14,8 @@ app.use(express.static('./assets'));
 // and this should be written before we requires ROUTES
 app.use(expressLayouts);
 
+
+
 // extract styles and scripts fro sub pages into the layout
 // for extracting css files
 app.set('layout extractStyles' , true);
