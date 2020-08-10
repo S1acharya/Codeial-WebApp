@@ -1,0 +1,25 @@
+<!-- for writing codes for layouts  -->
+<!-- this file will be required by main index.js file -->
+<html>
+    <head>
+        <title>
+            <%= title %>
+        </title>
+        <link rel="stylesheet" href="/css/layout.css">
+        <%- style %>
+    </head>
+    <body>
+        <!-- we include _header.ejs file -->
+        <%- include('_header'); -%>
+
+
+        <!-- this is predefined  and it contains the body section-->
+        <!-- it contains all the variable part -->
+        <%- body %>
+        
+
+        <!-- we include _footer.ejs file -->
+        <%- include('_footer'); -%>
+        <%- script %>
+    </body>
+</html>
