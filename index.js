@@ -5,7 +5,8 @@ const port = 8000;
 // require layout library
 const expressLayouts = require('express-ejs-layouts');
 
-
+// import mongoose.js file here
+const db = require('./config/mongoose');
 
 // we ask the index.js to look for static files in assets folder
 app.use(express.static('./assets'));
