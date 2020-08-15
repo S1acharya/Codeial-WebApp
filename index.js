@@ -1,6 +1,14 @@
 const express = require('express');
+// require cookie parser
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
+
+// to read the post requests
+app.use(express.urlencoded());
+
+// set up  cookie-parser i.e., tell app to use cookie-parser
+app.use(cookieParser());
 
 // require layout library
 const expressLayouts = require('express-ejs-layouts');
