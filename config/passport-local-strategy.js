@@ -1,0 +1,60 @@
+// ....................................in this page we set up the Passport to use it.........................................
+
+
+// import/require passport
+const passport = require('passport');
+
+// import passport-local-strategy
+const LocalStrategy = require('passport-local').Strategy;
+
+// import user to find email,. etc
+const User = require('../models/user');
+
+
+// tell passport to use local-strategy
+// authentication for SignIn
+passport.use(new LocalStrategy({
+        usernameField: 'email'
+    },
+    // done is our callback function which reports to passport.js
+    function(email , password , done){
+        // find the user and establish identity
+        User.findOne({email:email} , function(err , user){
+            if(err){
+                console.log('Error in finding user --> Passport');
+                return done(err);
+            }
+            // if password doesnot matches
+            if(!user || user.password != password){
+                console.log('Invalid Username/Password');
+                return done(null , false);
+            }
+            // if user found
+            return done(null , user);
+        });
+    }
+));
+
+
+// serializing the user to decide which key is to kept in the cookie
+// we find the id during signin  , send it to cookie and then to browser
+// a kind of encryption
+passport.serializeUser(function(user , done){
+    done(null , user.id);
+});
+
+
+// deserializing the user from the key in the cookies
+passport.deserializeUser(function(id , done){
+    User.findById(id , function(err , user){
+        if(err){
+            console.log('Error in finding user --> Passport');
+            return done(err);
+        }
+        // if user found
+        return done(null , user);
+    });
+});
+
+// exporting the passport
+module.exports = passport;

@@ -32,7 +32,6 @@ module.exports.create = function(req , res){
         if(err){console.log("error in finding user in signing up");
                 return
                 }
-
         if(!user){
                 User.create(req.body , function(err , user){
                     if(err){console.log("error in finding user in signing up");
@@ -50,5 +49,6 @@ module.exports.create = function(req , res){
 
 // create action to get data from the sign in page
 module.exports.createSession = function(req , res){
-    // TO DO
+    // user is signed in through use of Passport , so just redirect
+    return res.redirect('/');
 }
