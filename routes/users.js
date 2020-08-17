@@ -7,7 +7,9 @@ const userController = require('../controllers/users_controller');
 // import passport
 const passport = require('passport');
 
-router.get('/profile' , userController.profile);
+// router.get('/profile' , userController.profile);
+// earlier above line was used  , now used next line ,which allows only signed in user to go to profile page
+router.get('/profile' , passport.checkAuthentication ,  userController.profile);
 
 // router to connect to userController.signUp
 router.get('/sign-up' , userController.signUp);

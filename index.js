@@ -19,6 +19,9 @@ const passport = require('passport');
 // require passport-local-strategy
 const passportLocal = require('./config/passport-local-strategy');
 
+// require connect-mongo library
+const MongoStore = require('connect-mongo')(session);
+
 
 // ............................................above this line we will require the libraries..................................................
 // ...........................below this line we will be using different middlewares to perform different tasks.................................
@@ -62,12 +65,24 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge: (1000*60*100)
+    },
+    // mongo store for storing session cookie in db
+    store: new MongoStore(
+        {
+            mongooseConnection: db,
+            autoRemove: 'disabled'
+    },
+    function(err){
+        console.log(err || 'connect-mongodb setup ok');
     }
+    )
 }));
 
 // tell the app to use passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
  
 
 
