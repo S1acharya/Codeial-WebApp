@@ -6,6 +6,11 @@
             <%= title %>
         </title>
         <link rel="stylesheet" href="/css/layout.css">
+
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
+
+        <!-- style tag to include sytles from other partials -->
         <%- style %>
     </head>
     <body>
@@ -15,7 +20,9 @@
 
         <!-- this is predefined  and it contains the body section-->
         <!-- it contains all the variable part -->
-        <%- body %>
+        <main id = "layout-main">
+            <%- body %>
+        </main>
         
 
         <!-- we include _footer.ejs file -->

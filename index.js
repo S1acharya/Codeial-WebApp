@@ -23,8 +23,21 @@ const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo')(session);
 
 
+// require sass-middleware
+const sassMiddleware = require('node-sass-middleware');
+
 // ............................................above this line we will require the libraries..................................................
 // ...........................below this line we will be using different middlewares to perform different tasks.................................
+
+// let's connect sass with our css code
+// write these few lines before any middleware
+app.use(sassMiddleware({
+    src: './assets/scss',
+    dest: './assets/css',
+    debug: true,
+    outputStyle: 'extended',
+    prefix: '/css'
+}));
 
 
 // to read the post requests
