@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const commentSchema = new mongoose.Schema({
     content: {
         type: String,
@@ -18,5 +19,5 @@ const commentSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Comment = mongoose.model('Comment' , commentSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 module.exports = Comment;

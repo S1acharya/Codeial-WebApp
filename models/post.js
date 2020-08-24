@@ -6,19 +6,20 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     content: {
         type: String,
-        required:true
+        required: true
     },
     user: {
         // user needs to be linked to userSchema
-        type: mongoose.Schema.Types.ObjectId,
-        ref : 'User'
+        type:  mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+
     },
-    // include the array of ids of all comment in this post itself
+    // include the array of ids of all comments in this post schema itself
     // this is done when we want to display all comments on a post
     comments: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref : 'Comment'
+            type:  mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
         }
     ]
 },{
@@ -27,7 +28,7 @@ const postSchema = new mongoose.Schema({
 });
 
 // telling mongoose that this is a  model
-const Post = mongoose.model('Post' , postSchema);
+const Post = mongoose.model('Post', postSchema);
 
 // exporting model
 module.exports = Post;

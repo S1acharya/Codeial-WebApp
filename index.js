@@ -68,7 +68,7 @@ app.set('views' , './views');
 // middleware to take session cookie and encrypt it
 app.use(session({
     name: 'codeial',
-    // ToDo
+    // ToDo change the secret before deployment in production mode
     secret: "blahsomething",
     // when user has not logged in  , then we don't want to store extra data
     // so , it is false
@@ -77,17 +77,17 @@ app.use(session({
     // then to prevent us from storing it again and again
     resave:false,
     cookie:{
-        maxAge: (1000*60*100)
+        maxAge: (1000 * 60 * 100)
     },
     // mongo store for storing session cookie in db
     store: new MongoStore(
         {
             mongooseConnection: db,
             autoRemove: 'disabled'
-    },
-    function(err){
-        console.log(err || 'connect-mongodb setup ok');
-    }
+        },
+        function(err){
+            console.log(err || 'connect-mongodb setup ok');
+        }
     )
 }));
 

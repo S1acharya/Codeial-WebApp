@@ -8,7 +8,7 @@ mongoose.connect('mongodb://localhost/codeial_development' ,{ useNewUrlParser: t
 const db = mongoose.connection;
 
 // on error
-db.on('error' , console.error.bind(console , "Error connecting to database"));
+db.on('error' , console.error.bind(console , "Error connecting to Mongo database"));
 
 
 // if ruuning
