@@ -1,17 +1,43 @@
+// access the post model
+const Post = require('../models/post');
+
 // through next line , we are connecting home_controller.js to home.ejs
 
 module.exports.home = function(req , res){
     // console.log(req.cookies);
     // // to edit the cookie
     // res.cookie('saket' , 2000);
-    return res.render('home' , {
-        title: "CodialHome"
-    });
+
+    // this was to show post on screen . but it was not showing which user had posted which post
+    // Post.find({} , function(err , posts){
+    //     return res.render('home' , {
+    //         title: "CodialHome",
+    //         posts: posts
+    //     });
+    // });
+
+    // populate the user of each post
+    Post.find({})
+    .populate('user')
+    .populate({
+        path: 'Comments',
+        populate:{
+            path: 'user'
+        }
+    })
+    .exec(function(err, posts){
+        return res.render('home', {
+            title: "CodialHome",
+            posts:  posts
+        });
+    })
+
+
 
     // return res.end('<h1>Express is up for Codeial!</h1');
 }
 
-
+// it is adding the post in db can you show me ?
 
 
 // example
