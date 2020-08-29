@@ -27,6 +27,13 @@
                 
             <li>
                 <p>
+                    <!-- button for deleting post -->
+                    <!-- apply check -->
+                    <% if (locals.user && locals.user.id == post.user.id){ %>
+                        <small>
+                            <a href="/posts/destroy/<%= post.id %>">DELETE</a>
+                        </small>
+                    <% } %>
                     <%= post.content %>
                     <br>
                     <small>
@@ -53,6 +60,13 @@
                             <% for(comment of post.comments){%>
 
                                 <p>
+                                    <!-- button for deleting post -->
+                                    <!-- apply check -->
+                                    <% if (locals.user && locals.user.id == comment.user.id){ %>
+                                        <small>
+                                            <a href="/comments/destroy/<%= comment.id %>">DELETE</a>
+                                        </small>
+                                    <% } %>
                                     <%= comment.content %>
                                     <br>
                                     <small>

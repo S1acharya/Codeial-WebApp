@@ -11,4 +11,7 @@ const postsController = require('../controllers/posts_controller');
 // this posts the data to database
 router.post('/create', passport.checkAuthentication,  postsController.create);
 
+// create a route to map to the action of DESTROY post and comments
+router.get('/destroy/:id' ,passport.checkAuthentication , postsController.destroy);
+
 module.exports = router;
