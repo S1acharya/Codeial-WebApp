@@ -8,7 +8,10 @@ const usersController = require('../controllers/users_controller');
 
 // router.get('/profile' , userController.profile);
 // earlier above line was used  , now used next line ,which allows only signed in user to go to profile page
-router.get('/profile', passport.checkAuthentication, usersController.profile);
+router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
+
+// route to map to usersController.update
+router.post('/update/:id', passport.checkAuthentication, usersController.update);
 
 // router to connect to userController.signUp
 router.get('/sign-up', usersController.signUp);

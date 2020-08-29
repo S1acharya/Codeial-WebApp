@@ -1,6 +1,9 @@
 // access the post model
 const Post = require('../models/post');
 
+// require user
+const User = require('../models/user');
+
 // through next line , we are connecting home_controller.js to home.ejs
 
 
@@ -27,10 +30,18 @@ module.exports.home = function(req, res){
         }
     })
     .exec(function(err, posts){
-        return res.render('home', {
-            title: "CodialHome",
-            posts:  posts
+
+        User.find({} , function(err , users){
+
+            return res.render('home', {
+                title: "CodialHome",
+                posts:  posts,
+                // we get the list of all users and then display them on home.ejs
+                all_users: users
+            });
         });
+
+        
     })
 
     // return res.end('<h1>Express is up for Codeial!</h1');

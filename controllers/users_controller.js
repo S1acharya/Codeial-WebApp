@@ -1,12 +1,35 @@
 // require user.js model to connect to mongooes
 const User = require('../models/user');
 
+// module.exports.profile = function(req , res){
+//     return res.render('user_profile' , {
+//         title: "User Profile Page!"
+//     })
+// }
+
+// above was used when no need to display list of users
 module.exports.profile = function(req , res){
-    return res.render('user_profile' , {
-        title: "User Profile Page!"
-    })
-    // res.end('<h1>User Profile</h1>');
+    User.findById(req.params.id , function(err , user){
+        return res.render('user_profile' , {
+            title: "User Profile Page!",
+            profile_user: user
+        });
+    });
 }
+
+
+// action to update profile page of user
+module.exports.update = function(req,  res){
+    // check that only logged in user allowed to update his/her profile
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id , req.body , function(err , user){
+            return res.redirect('back');
+        });
+    }else{
+        return res.status(401).send('Unauthorized');
+    }
+}
+
 
 // creating action for sign up or rendering sign up page
 module.exports.signUp = function(req , res){

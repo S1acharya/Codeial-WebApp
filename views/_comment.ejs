@@ -1,0 +1,18 @@
+<!-- this is working as a partial. we include it in _comment.ejs -->
+
+<li>
+    <p>
+        <!-- button for deleting post -->
+        <!-- apply check -->
+        <% if (locals.user && locals.user.id == comment.user.id){ %>
+            <small>
+                <a href="/comments/destroy/<%= comment.id %>">DELETE</a>
+            </small>
+        <% } %>
+        <%= comment.content %>
+        <br>
+        <small>
+            <%= comment.user.name %>
+        </small>
+    </p>
+</li>
