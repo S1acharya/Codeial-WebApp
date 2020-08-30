@@ -85,6 +85,10 @@ module.exports.create = function(req, res){
 
 // create action to get data from the sign in page
 module.exports.createSession = function(req , res){
+    // creating flash message
+    // this is just a request. now we need to create custom middleware
+    // to get flash as response
+    req.flash('success' , 'Logged in Successfully');
     // user is signed in through use of Passport , so just redirect
     return res.redirect('/');
 }
@@ -95,6 +99,8 @@ module.exports.destroySession = function(req , res){
     // first logout
     // below function is provided by passport
     req.logout();
+    // creating flash message
+    req.flash('success' , 'Logged Out Successfully');
     // then redirect to home page
     return res.redirect('/');
 }

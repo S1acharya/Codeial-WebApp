@@ -5,6 +5,11 @@
         <title>
             <%= title %>
         </title>
+
+        <!-- adding CDN link to noty js -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
         <link rel="stylesheet" href="/css/layout.css">
 
         <link rel="stylesheet" href="/css/header.css">
@@ -18,6 +23,14 @@
         <%- include('_header'); %>
 
 
+        <!-- this was used before noty.js -->
+        <!-- include the template to shoe flash message
+        <% if(flash.success && flash.success.length >0){ %>
+            <h5>
+                <%= flash.success %>
+            </h5>
+        <% } %> -->
+
         <!-- this is predefined  and it contains the body section-->
         <!-- it contains all the variable part -->
         <main id = "layout-main">
@@ -29,5 +42,31 @@
         <%- include('_footer'); %>
         
         <%- script %>
+
+
+        <!-- code to display using Noty.js -->
+        <script>
+
+            <% if(flash.success && flash.success.length >0){ %>
+                new Noty({
+                    theme: 'relax',
+                    text: "<%= flash.success %>",
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+            <% } %>
+
+                // if error found
+            <% if(flash.error && flash.error.length >0){ %>
+                new Noty({
+                    theme: 'relax',
+                    text: "<%= flash.success %>",
+                    type: 'error',
+                    layout: 'topRight',
+                    timeout: 1500
+                }).show();
+            <% } %>
+        </script>
     </body>
 </html>
