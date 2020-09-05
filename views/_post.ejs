@@ -1,12 +1,12 @@
 <!-- this is working as a partial. we include it in home.ejs -->
 
-<li>
+<li id = "post-<%= post._id%>">
     <p>
         <!-- button for deleting post -->
         <!-- apply check -->
         <% if (locals.user && locals.user.id == post.user.id){ %>
             <small>
-                <a href="/posts/destroy/<%= post.id %>">DELETE</a>
+                <a class = "delete-post-button" href="/posts/destroy/<%= post.id %>">DELETE</a>
             </small>
         <% } %>
         <%= post.content %>
