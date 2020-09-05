@@ -104,3 +104,10 @@ module.exports.home =  async function(req, res){
 
 // example
 // module.exports.actionName = function(req , res){}
+
+// using then
+// Post.find({}).populate('comments').then(function());
+
+// let posts = Post.find({}).populate('comments').exec();
+
+// posts.then()

@@ -4,6 +4,7 @@ const Post = require('../models/post');
 
 // action to create comment for a post
 // we write it using async await
+// here , we will also check if request is AJAX request
 module.exports.create = async function(req, res){
     try{
 
@@ -16,8 +17,21 @@ module.exports.create = async function(req, res){
             });
             post.comments.push(comment);
             post.save();
-            req.flash('success' , 'commented successfully on post');
-            return res.redirect('back');
+
+            if (req.xhr){
+                // Similar for comments to fetch the user's id!
+                comment = await comment.populate('user', 'name').execPopulate();
+    
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Post created!"
+                });
+            }
+
+            req.flash('success' , 'Comment published!');
+            return res.redirect('/');
         }
 
     }catch(err){
@@ -27,6 +41,32 @@ module.exports.create = async function(req, res){
     }
     
 }
+
+// action to create comment for a post
+// we write it using async await
+// module.exports.create = async function(req, res){
+//     try{
+
+//         let post = await Post.findById(req.body.post);
+//         if (post){
+//             let comment = await Comment.create({
+//                 content: req.body.content,
+//                 post: req.body.post,
+//                 user: req.user._id
+//             });
+//             post.comments.push(comment);
+//             post.save();
+//             req.flash('success' , 'commented successfully on post');
+//             return res.redirect('back');
+//         }
+
+//     }catch(err){
+//         req.flash('error' , err);
+//         // console.log('Error' , err);
+//         return res.redirect('back');
+//     }
+    
+// }
 
 
 
@@ -57,8 +97,11 @@ module.exports.create = async function(req, res){
 
 
 
+
+
 // action to delete comment of a post
 // we do it using async await
+// here , we will also check if request is AJAX request
 module.exports.destroy = async function(req  ,res){
     
     try{
@@ -70,7 +113,17 @@ module.exports.destroy = async function(req  ,res){
 
             comment.remove();
             
-            let post = await Post.findByIdAndUpdate(postId , {$pull : {comments: req.params.id}});
+            let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+
+            // send the comment id which was deleted back to the views
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
             
             req.flash('success' , 'commented deleted successfully');
             return res.redirect('back');
@@ -85,6 +138,36 @@ module.exports.destroy = async function(req  ,res){
         return res.redirect('back');
     }
 }
+
+
+// action to delete comment of a post
+// we do it using async await
+// module.exports.destroy = async function(req  ,res){
+    
+//     try{
+
+//         let comment = await Comment.findById(req.params.id);
+//         if(comment.user == req.user.id){
+                
+//             let postId = comment.post;
+
+//             comment.remove();
+            
+//             let post = await Post.findByIdAndUpdate(postId , {$pull : {comments: req.params.id}});
+            
+//             req.flash('success' , 'commented deleted successfully');
+//             return res.redirect('back');
+//         } else{
+//             req.flash('error' , 'you cannot delete this comment');
+//             return res.redirect('back');
+//         }
+
+//     }catch(err){
+//         req.flash('error' , err);
+//         // console.log('Error' , err);
+//         return res.redirect('back');
+//     }
+// }
 
 
 
