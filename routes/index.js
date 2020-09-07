@@ -19,13 +19,15 @@ router.use('/users', require('./users'));
 // index.js of router will have access to all other routes
 // so this way we get access to other routes
 
-// call comments.js route here
-router.use('/comments', require('./comments'));
-
 // we called the route(posts.js) here
 router.use('/posts', require('./posts'));
 
+// call comments.js route here
+router.use('/comments', require('./comments'));
 
+
+// we connect the (index.js of api folder) with this folder
+router.use('/api' , require('./api'));
 
 // for any further routes, access from here
 // router.use('/routerName', require('./routerfile));

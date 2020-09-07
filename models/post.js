@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 // create schema for posts
-// it is one to many relation i.e., one user cna have multiple posts
+// it is one to many relation i.e., one user can have multiple posts
 const postSchema = new mongoose.Schema({
     content: {
         type: String,
