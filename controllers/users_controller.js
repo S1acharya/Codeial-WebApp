@@ -1,6 +1,10 @@
 // require user.js model to connect to mongooes
 const User = require('../models/user');
 
+// importing some modules to remove earlier avatar and to add a new one
+const fs = require('fs');
+const path = require('path');
+
 // module.exports.profile = function(req , res){
 //     return res.render('user_profile' , {
 //         title: "User Profile Page!"
@@ -19,13 +23,52 @@ module.exports.profile = function(req , res){
 
 
 // action to update profile page of user
-module.exports.update = function(req,  res){
+module.exports.update = async function(req,  res){
     // check that only logged in user allowed to update his/her profile
-    if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id , req.body , function(err , user){
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id , req.body , function(err , user){
+    //         return res.redirect('back');
+    //     });
+    // }else{
+    //     return res.status(401).send('Unauthorized');
+    // }
+
+
+
+    // writing the code in async format
+    // alos we are adding the feature of adding profile picture
+     if(req.user.id == req.params.id){
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req , res , function(err){
+                if(err){console.log('******Multer Error:' , err)}
+
+                user.name = req.body.name;
+                user.email = req.body.email;
+                if(req.file){
+
+                    // to remove earlier file and add a new one
+                    // not the best way because atleast
+                    // one file must be present earlier to be replaced
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname , '..' , user.avatar));
+                    }
+                    // this is saving the path of uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+                // console.log(req.file);
+            });
+            
+        }catch{
+            req.flash('error' , err);
             return res.redirect('back');
-        });
+        }
+
+
     }else{
+        req.flash('error' , 'Unathorized');
         return res.status(401).send('Unauthorized');
     }
 }

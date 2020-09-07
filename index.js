@@ -54,6 +54,10 @@ app.use(cookieParser());
 // we ask the index.js to look for static files in assets folder
 app.use(express.static('./assets'));
 
+// make the uploads path available to the browser
+// to show uploaded images on screen
+app.use('/uploads' , express.static(__dirname + '/uploads'));
+
 // now we tell app to use express library
 // and this should be written before we requires ROUTES
 app.use(expressLayouts);
