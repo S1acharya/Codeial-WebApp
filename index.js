@@ -19,6 +19,9 @@ const passport = require('passport');
 // require passport-local-strategy
 const passportLocal = require('./config/passport-local-strategy');
 
+// require passport-jwt
+const passportJWT = require('./config/passport-jwt-strategy');
+
 // require connect-mongo library
 const MongoStore = require('connect-mongo')(session);
 
