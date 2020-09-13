@@ -2,9 +2,13 @@ const Comment = require('../models/comment');
 
 const Post = require('../models/post');
 
+const commentsMailer = require('../mailers/comments_mailer');
+
+
 // action to create comment for a post
 // we write it using async await
 // here , we will also check if request is AJAX request
+// also adding the feature of sending mail
 module.exports.create = async function(req, res){
     try{
 
@@ -18,9 +22,13 @@ module.exports.create = async function(req, res){
             post.comments.push(comment);
             post.save();
 
+
+            comment = await comment.populate('user', 'name email').execPopulate();
+            // calling the function which sends mail
+            commentsMailer.newComment(comment);
+
             if (req.xhr){
-                // Similar for comments to fetch the user's id!
-                comment = await comment.populate('user', 'name').execPopulate();
+                
     
                 return res.status(200).json({
                     data: {
@@ -41,6 +49,46 @@ module.exports.create = async function(req, res){
     }
     
 }
+
+// action to create comment for a post
+// we write it using async await
+// here , we will also check if request is AJAX request
+// module.exports.create = async function(req, res){
+//     try{
+
+//         let post = await Post.findById(req.body.post);
+//         if (post){
+//             let comment = await Comment.create({
+//                 content: req.body.content,
+//                 post: req.body.post,
+//                 user: req.user._id
+//             });
+//             post.comments.push(comment);
+//             post.save();
+
+//             if (req.xhr){
+//                 // Similar for comments to fetch the user's id!
+//                 comment = await comment.populate('user', 'name').execPopulate();
+    
+//                 return res.status(200).json({
+//                     data: {
+//                         comment: comment
+//                     },
+//                     message: "Post created!"
+//                 });
+//             }
+
+//             req.flash('success' , 'Comment published!');
+//             return res.redirect('/');
+//         }
+
+//     }catch(err){
+//         req.flash('error' , err);
+//         // console.log('Error' , err);
+//         return res.redirect('back');
+//     }
+    
+// }
 
 // action to create comment for a post
 // we write it using async await
