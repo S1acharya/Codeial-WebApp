@@ -1,3 +1,7 @@
+// here we create the setup for using JWT Strategy
+// a key in jwt has 3 things- Headers, payload , encrypted key
+
+
 const passport = require('passport');
 
 const JWTStrategy = require('passport-jwt').Strategy;

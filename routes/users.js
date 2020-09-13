@@ -33,4 +33,11 @@ router.post('/create-session', passport.authenticate(
 // create route for destroy session
 router.get('/sign-out', usersController.destroySession);
 
+// to check for credentials for google auth2
+router.get('/auth/google' , passport.authenticate('google' , {scope: ['profile' , 'email']}));
+
+// to get callback url
+router.get('/auth/google/callback' , passport.authenticate('google' , {failureRedirect: '/users/sign-in'}) , usersController.createSession);
+
+
 module.exports = router;
