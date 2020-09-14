@@ -4,11 +4,16 @@ const Post = require('../models/post');
 
 const commentsMailer = require('../mailers/comments_mailer');
 
+// import comment email worker and kue
+const commentEmailWorker = require('../workers/comment_email_worker');
+const queue = require('../config/kue');
+
 
 // action to create comment for a post
 // we write it using async await
 // here , we will also check if request is AJAX request
 // also adding the feature of sending mail
+// adding kue for delayed jobs feature
 module.exports.create = async function(req, res){
     try{
 
@@ -26,6 +31,18 @@ module.exports.create = async function(req, res){
             comment = await comment.populate('user', 'name email').execPopulate();
             // calling the function which sends mail
             commentsMailer.newComment(comment);
+
+            // i am commenting below few lines because redis is used when we want to scale our project
+            // but will use it while making another projects
+
+            // let job = queueMicrotask.create('emails' , comment).save(function(err){
+
+            //     if(err){console.log('error in creating a queue' , err); return;}
+
+            //     console.log('job enqueued' , job.id);
+            // });
+
+            
 
             if (req.xhr){
                 
@@ -49,6 +66,51 @@ module.exports.create = async function(req, res){
     }
     
 }
+
+// action to create comment for a post
+// we write it using async await
+// here , we will also check if request is AJAX request
+// also adding the feature of sending mail
+// module.exports.create = async function(req, res){
+//     try{
+
+//         let post = await Post.findById(req.body.post);
+//         if (post){
+//             let comment = await Comment.create({
+//                 content: req.body.content,
+//                 post: req.body.post,
+//                 user: req.user._id
+//             });
+//             post.comments.push(comment);
+//             post.save();
+
+
+//             comment = await comment.populate('user', 'name email').execPopulate();
+//             // calling the function which sends mail
+//             commentsMailer.newComment(comment);
+
+//             if (req.xhr){
+                
+    
+//                 return res.status(200).json({
+//                     data: {
+//                         comment: comment
+//                     },
+//                     message: "Post created!"
+//                 });
+//             }
+
+//             req.flash('success' , 'Comment published!');
+//             return res.redirect('/');
+//         }
+
+//     }catch(err){
+//         req.flash('error' , err);
+//         // console.log('Error' , err);
+//         return res.redirect('back');
+//     }
+    
+// }
 
 // action to create comment for a post
 // we write it using async await

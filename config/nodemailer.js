@@ -13,7 +13,7 @@ let transporter = nodemailer.createTransport({
     // email will be sent using this email
     auth: {
         user: 'acharyasaket.08@gmail.com',
-        pass: 'Fighter@135#'
+        pass: 'Fighter@135*#'
     }
 });
 

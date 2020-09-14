@@ -1,3 +1,5 @@
+// in this page, we create the function which sends the mail whenever it is called
+
 const nodemailer = require('../config/nodemailer');
 const nodeMailer = require('../config/nodemailer');
 
