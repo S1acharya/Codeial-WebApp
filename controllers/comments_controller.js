@@ -1,12 +1,9 @@
 const Comment = require('../models/comment');
-
 const Post = require('../models/post');
-
 const commentsMailer = require('../mailers/comments_mailer');
-
-// import comment email worker and kue
-const commentEmailWorker = require('../workers/comment_email_worker');
 const queue = require('../config/kue');
+const commentEmailWorker = require('../workers/comment_email_worker');
+const Like = require('../models/like');
 
 
 // action to create comment for a post
@@ -35,13 +32,14 @@ module.exports.create = async function(req, res){
             // i am commenting below few lines because redis is used when we want to scale our project
             // but will use it while making another projects
 
-            // let job = queueMicrotask.create('emails' , comment).save(function(err){
+            // let job = queue.create('emails', comment).save(function(err){
+            //     if (err){
+            //         console.log('Error in sending to the queue', err);
+            //         return;
+            //     }
+            //     console.log('job enqueued', job.id);
 
-            //     if(err){console.log('error in creating a queue' , err); return;}
-
-            //     console.log('job enqueued' , job.id);
-            // });
-
+            // })
             
 
             if (req.xhr){
@@ -212,18 +210,22 @@ module.exports.create = async function(req, res){
 // action to delete comment of a post
 // we do it using async await
 // here , we will also check if request is AJAX request
-module.exports.destroy = async function(req  ,res){
-    
-    try{
+module.exports.destroy = async function(req, res){
 
+    try{
         let comment = await Comment.findById(req.params.id);
-        if(comment.user == req.user.id){
-                
+
+        if (comment.user == req.user.id){
+
             let postId = comment.post;
 
             comment.remove();
-            
+
             let post = Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+
+            // CHANGE :: destroy the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+
 
             // send the comment id which was deleted back to the views
             if (req.xhr){
@@ -234,19 +236,20 @@ module.exports.destroy = async function(req  ,res){
                     message: "Post deleted"
                 });
             }
-            
-            req.flash('success' , 'commented deleted successfully');
+
+
+            req.flash('success', 'Comment deleted!');
+
             return res.redirect('back');
-        } else{
-            req.flash('error' , 'you cannot delete this comment');
+        }else{
+            req.flash('error', 'Unauthorized');
             return res.redirect('back');
         }
-
     }catch(err){
-        req.flash('error' , err);
-        // console.log('Error' , err);
-        return res.redirect('back');
+        req.flash('error', err);
+        return;
     }
+    
 }
 
 

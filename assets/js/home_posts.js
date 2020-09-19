@@ -16,12 +16,16 @@
                 data: newPostForm.serialize(),
                 success: function(data){
                     let newPost = newPostDom(data.data.post);
-                    $(`#posts-list-container>ul`).prepend(newPost);
-                    deletePost($(' .delete-post-button' , newPost));
+                    $('#posts-list-container>ul').prepend(newPost);
+                    deletePost($(' .delete-post-button', newPost));
                     // console.log(data);
 
                     // call the create comment class
                     new PostComments(data.data.post._id);
+
+                    // CHANGE :: enable the functionality of the toggle like button on the new post
+                    new ToggleLike($(' .toggle-like-button', newPost));
+
 
                     new Noty({
                         theme: 'relax',
@@ -46,44 +50,44 @@
 
 
 
-
-
     // method to create a post in DOM
     let newPostDom = function(post){
         // copied the content of _post.ejs and pasting here in DOM
-        return $(`<!-- this is working as a partial. we include it in home.ejs -->
-
-                <li id = "post-${post._id}">
+        // CHANGE :: show the count of zero likes on this post
+        return $(`<li id="post-${post._id}">
                     <p>
                         
-                            <small>
-                                <a class = "delete-post-button" href="/posts/destroy/${ post._id }">DELETE</a>
-                            </small>
-                        
-                            ${ post.content}
+                        <small>
+                            <a class="delete-post-button"  href="/posts/destroy/${ post._id }">X</a>
+                        </small>
+                       
+                        ${ post.content }
                         <br>
                         <small>
-                            ${ post.user.name }
+                        ${ post.user.name }
                         </small>
+                        <br>
+                        <small>
+                            
+                                <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                                    0 Likes
+                                </a>
+                            
+                        </small>
+
                     </p>
-                
-                    <!-- form for comments -->
-                    <div class = "post-comments">
-                        <!-- form to be shown to user only if logged in -->
+                    <div class="post-comments">
                         
                             <form id="post-${ post._id }-comments-form" action="/comments/create" method="POST">
-                                <input type="text" name = "content" placeholder="Type Here to add comment..." required>
-                                <input type="hidden"  name = "post" value=" ${ post._id } ">
-                                <input type="submit" value = "Add Comment">
+                                <input type="text" name="content" placeholder="Type Here to add comment..." required>
+                                <input type="hidden" name="post" value="${ post._id }" >
+                                <input type="submit" value="Add Comment">
                             </form>
+               
                 
-                        
-                
-                        <!-- show comment -->
-                        <div class = "post-comments-list">
-                            <ul id = "post-comments-${ post._id }">
-                
-                          
+                        <div class="post-comments-list">
+                            <ul id="post-comments-${ post._id }">
+                                
                             </ul>
                         </div>
                     </div>

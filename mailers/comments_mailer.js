@@ -1,7 +1,6 @@
 // in this page, we create the function which sends the mail whenever it is called
 
 const nodemailer = require('../config/nodemailer');
-const nodeMailer = require('../config/nodemailer');
 
 
 // create a function that will send mail
@@ -22,7 +21,7 @@ exports.newComment = (comment) => {
             return;
         }
 
-        console.log('Message sent',  info);
+        // console.log('Message sent',  info);
         return;
     });
 }

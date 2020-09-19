@@ -25,6 +25,9 @@ router.use('/posts', require('./posts'));
 // call comments.js route here
 router.use('/comments', require('./comments'));
 
+// call the likes.js here
+router.use('/likes', require('./likes'));
+
 
 // we connect the (index.js of api folder) with this folder
 router.use('/api' , require('./api'));

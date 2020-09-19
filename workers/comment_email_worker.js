@@ -7,10 +7,10 @@
 
 // const commentsMailer = require('../mailers/comments_mailer');
 
-// // we create a function (process)
-// queue.process('emails' , function(job , done){
-//     console.log('emails worker is processing a job', job.data);
+// queue.process('emails', function(job, done){
+//     console.log('emails worker is processing a job ', job.data);
 
-//     // commentsMailer calls the mail
 //     commentsMailer.newComment(job.data);
+
+//     done();
 // });

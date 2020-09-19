@@ -21,6 +21,13 @@ const postSchema = new mongoose.Schema({
             type:  mongoose.Schema.Types.ObjectId,
             ref: 'Comment'
         }
+    ] , 
+    // we add array of likes because we are using feature of likes
+    likes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Like'
+        }
     ]
 },{
     // timestamps
