@@ -46,6 +46,13 @@
             </p>
         <% } %>
     </section>
+
+    
+
+    <!-- include chat box -->
+    <div>
+        <%- include('_chat_box') -%>
+    </div>
 </div>
 
 
@@ -64,3 +71,17 @@
         let toggleLike = new ToggleLike(self);
     });
 </script>
+
+
+
+<!-- include the link for socket.io here -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+
+<!-- connect to chat box only if user is logged in -->
+<!-- initialize the class from chat_engine.js -->
+<% if (locals.user) { %>
+<script>
+    new ChatEngine('user-chat-box' , '<%= locals.user.email %>')
+</script>
+<% } %>

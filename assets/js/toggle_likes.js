@@ -1,4 +1,6 @@
 // CHANGE :: create a class to toggle likes when a link is clicked, using AJAX
+// togglelike is a class which handles the the ajax request which is used to 
+// call rout for incrementing or decrementing the like count
 class ToggleLike{
     constructor(toggleElement){
         this.toggler = toggleElement;
