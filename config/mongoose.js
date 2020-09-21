@@ -1,8 +1,12 @@
 // require mongoose library
 const mongoose = require('mongoose');
 
+
+// require environment for deployment
+const env = require('./environment');
 // provide connection
-mongoose.connect('mongodb://localhost/codeial_development' ,{ useNewUrlParser: true  , useUnifiedTopology: true} );
+// CHANGED
+mongoose.connect(`mongodb://localhost/${env.db}` ,{ useNewUrlParser: true  , useUnifiedTopology: true} );
 
 // setup database
 const db = mongoose.connection;

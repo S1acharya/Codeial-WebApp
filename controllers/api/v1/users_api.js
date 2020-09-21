@@ -4,6 +4,9 @@ const User = require('../../../models/user');
 // json web token library
 const jwt = require('jsonwebtoken');
 
+// require environment for deployment
+const env = require('../../../config/environment');
+
 // create action to get data from the sign in page
 module.exports.createSession =async function(req , res){
 
@@ -19,7 +22,8 @@ module.exports.createSession =async function(req , res){
             return res.json(200 ,{
                 message: 'Sign in successful , here is your token , please keep it safe',
                 data: {
-                    token: jwt.sign(user.toJSON() , 'codeial',  {expiresIn: '100000'})
+                    // CHANGED
+                    token: jwt.sign(user.toJSON() , env.jwt_secret ,  {expiresIn: '100000'})
                 }
             })
 

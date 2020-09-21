@@ -1,21 +1,14 @@
 const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
+// require environment for deployment
+const env = require('./environment');
 
 
 // define transporter
 // transporter is an object that is attached/assigned to nodemailer
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    // email will be sent using this email
-    auth: {
-        user: 'acharyasaket.08@gmail.com',
-        pass: 'Fighter@135*#'
-    }
-});
+// CHANGED
+let transporter = nodemailer.createTransport(env.smtp);
 
 
 // define that we will use ejs template for rendering

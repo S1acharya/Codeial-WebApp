@@ -6,7 +6,8 @@
 
 <h1>Welcome To Codeial / <%= title %> </h1>
 <!-- linking home.scss file here -->
-<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="<%= assetPath('css/home.css') %>">
+<link rel="stylesheet" href="<%= assetPath('css/chat_box.css') %>">
 
 <div id = "home-container">
     
@@ -57,14 +58,14 @@
 
 
 <!-- importing this script for creating the comments -->
-<script src="/js/home_post_comments.js" ></script>
+<script src="<%= assetPath('js/home_post_comments.js') %>" ></script>
 <!-- including the script home_posts.js -->
-<script src="/js/home_posts.js"></script>
+<script src="<%= assetPath('js/home_posts.js') %>"></script>
 
 
 
 <!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
-<script src="js/toggle_likes.js"></script>
+<script src="<%= assetPath('js/toggle_likes.js') %>"></script>
 <script>
     $('.toggle-like-button').each(function(){
         let self = this;
@@ -76,7 +77,7 @@
 
 <!-- include the link for socket.io here -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-<script src="/js/chat_engine.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
 
 <!-- connect to chat box only if user is logged in -->
 <!-- initialize the class from chat_engine.js -->
