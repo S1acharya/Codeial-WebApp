@@ -24,6 +24,7 @@
                     new PostComments(data.data.post._id);
 
                     // CHANGE :: enable the functionality of the toggle like button on the new post
+                    // i.e., binded the class of toggle like with the new post
                     new ToggleLike($(' .toggle-like-button', newPost));
 
 

@@ -24,7 +24,15 @@ const userSchema = new mongoose.Schema({
     // fieldname in which we are storing files
     avatar:{
         type: String
-    }
+    },
+    // array of friendships. by this we can easily get all the friends of 
+    // a particular user
+    friendships: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Friendship'
+        }
+    ]
 }, {
     timestamps: true
 });

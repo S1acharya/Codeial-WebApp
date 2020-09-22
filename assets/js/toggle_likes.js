@@ -1,6 +1,6 @@
 // CHANGE :: create a class to toggle likes when a link is clicked, using AJAX
 // togglelike is a class which handles the the ajax request which is used to 
-// call rout for incrementing or decrementing the like count
+// call route for incrementing or decrementing the like count
 class ToggleLike{
     constructor(toggleElement){
         this.toggler = toggleElement;
@@ -14,6 +14,7 @@ class ToggleLike{
             let self = this;
 
             // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+            // below is the ajax which is handled by toggle like class
             $.ajax({
                 type: 'POST',
                 url: $(self).attr('href'),
