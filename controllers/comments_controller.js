@@ -27,19 +27,21 @@ module.exports.create = async function(req, res){
 
             comment = await comment.populate('user', 'name email').execPopulate();
             // calling the function which sends mail
-            commentsMailer.newComment(comment);
+            // next line was used to send mails when delayed jobs feature 
+            // was not added 
+            // commentsMailer.newComment(comment);
 
             // i am commenting below few lines because redis is used when we want to scale our project
             // but will use it while making another projects
+            // when added delayed jobs feature , then next few lines should be implemented
+            let job = queue.create('emails', comment).save(function(err){
+                if (err){
+                    console.log('Error in sending to the queue', err);
+                    return;
+                }
+                console.log('job enqueued', job.id);
 
-            // let job = queue.create('emails', comment).save(function(err){
-            //     if (err){
-            //         console.log('Error in sending to the queue', err);
-            //         return;
-            //     }
-            //     console.log('job enqueued', job.id);
-
-            // })
+            })
             
 
             if (req.xhr){
