@@ -6,6 +6,9 @@ class ChatEngine{
         this.userEmail = userEmail;
 
         this.socket = io.connect('http://localhost:5000');
+        // when we sent it to production, we do
+        // this is public IPV4 address from our AWS generated instance
+        // this.socket = io.connect('http://34.229.139.114:5000');
 
         if(this.userEmail){
             this.connectionHandler();

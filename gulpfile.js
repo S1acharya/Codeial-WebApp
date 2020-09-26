@@ -1,9 +1,13 @@
 const gulp = require('gulp');
 
+// to minimy css files
 const sass = require('gulp-sass');
 const cssnano = require('gulp-cssnano');
+// rev is for reversioning. i.e. it add's hash code to css , js,  images etc
 const rev = require('gulp-rev');
+// uglify to minimise js files
 const uglify = require('gulp-uglify-es').default;
+// to minimise images
 const imagemin = require('gulp-imagemin');
 const del = require('del');
 
@@ -45,6 +49,8 @@ gulp.task('js', function(done){
 
 gulp.task('images', function(done){
     console.log('compressing images...');
+    // in next line we use regex(regular function)
+    // i.e., images with any of these extensions will be minimised
     gulp.src('./assets/**/*.+(png|jpg|gif|svg|jpeg)')
     .pipe(imagemin())
     .pipe(rev())

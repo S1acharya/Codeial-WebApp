@@ -2,7 +2,7 @@ const express = require('express');
 // require environment. only during deployment process
 const env = require('./config/environment');
 // require morgan
-// const logger = require('morgan');
+const logger = require('morgan');
 
 // require cookie parser
 const cookieParser = require('cookie-parser');
@@ -76,7 +76,7 @@ if(env.name == 'development'){
 
 
 // to read the post requests
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: false}));
 
 // set up  cookie-parser i.e., tell app to use cookie-parser
 app.use(cookieParser());
@@ -90,7 +90,7 @@ app.use(express.static(env.asset_path));
 app.use('/uploads' , express.static(__dirname + '/uploads'));
 
 // use logger for storing log for 1 day in production mode
-// app.use(logger(env.morgan.mode, env.morgan.options));
+app.use(logger(env.morgan.mode, env.morgan.options));
 
 
 // now we tell app to use express library
