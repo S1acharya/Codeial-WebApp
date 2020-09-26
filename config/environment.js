@@ -25,8 +25,8 @@ const accessLogStream = rfs.createStream('access.log', {
 const development = {
     name: 'development',
     asset_path: './assets',
-    session_cookie_key: 'blahsomething',
-    db: 'codeial_development',
+    session_cookie_key: 'pp',
+    db: 'pp',
     smtp: {
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -38,10 +38,10 @@ const development = {
             pass: 'codingNonzas'
         }
     },
-    google_client_id: "937758260052-7luaqbq74onjtmrb0rckk7q181p291d6.apps.googleusercontent.com",
-    google_client_secret: "WJuSvxaXdOAAeegI0fGWEXVo",
-    google_call_back_url: "http://localhost:8000/users/auth/google/callback",
-    jwt_secret: 'codeial',
+    google_client_id: "937758260052-p.apps.googleusercontent.com",
+    google_client_secret: "WJuSvxaXdOAAeegppI0fGWEXVo",
+    google_call_back_url: "http://pp:8000/users/auth/google/callback",
+    jwt_secret: 'pp',
     morgan: {
         mode: 'dev',
         options: {stream: accessLogStream}
